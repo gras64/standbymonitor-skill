@@ -22,7 +22,7 @@
               "name": "timer",
               "type": "number",
               "label": "standby timer in Sekundes",
-              "value": 20
+              "value": 60
           }
         ]
       }

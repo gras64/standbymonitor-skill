@@ -10,7 +10,7 @@ class Standbymonitor(MycroftSkill):
     def initialize(self):
         self.settings["auto"] = self.settings.get('auto', True)
         self.settings["monitor"] = self.settings.get('monitor', 1)
-        self.settings["timer"] = self.settings.get('timer', 30)
+        self.settings["timer"] = self.settings.get('timer', 60)
         if self.settings["auto"]:
             self.add_event('recognizer_loop:audio_output_end',
                         self.handle_standby)
