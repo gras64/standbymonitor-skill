@@ -1,0 +1,31 @@
+
+{
+  "skillMetadata":{
+    "sections":[
+      {
+        "name": "Monitor off",
+        "fields": [
+          {
+              "name": "auto",
+              "type": "checkbox",
+              "label": "automatik",
+              "value": "True"
+          },
+          {
+            "name": "monitor",
+            "type": "select",
+            "label": "(autoplay) append note to request",
+            "options": "HDMI|1;7 Zoll pi Display|2;notebook|3",
+            "value": 1
+          },          
+          {
+              "name": "timer",
+              "type": "number",
+              "label": "standby timer in Sekundes",
+              "value": 20
+          }
+        ]
+      }
+    ]
+  }
+}
