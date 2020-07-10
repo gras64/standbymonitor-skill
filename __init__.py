@@ -22,7 +22,6 @@ class Standbymonitor(MycroftSkill):
         self.schedule_event(self.ex_standby, 30, name='standby')
 
     def ex_standby(self):
-        self.log.info(self.settings["monitor"])
         if int(self.settings["monitor"]) == 1:
             self.log.info(self.settings["monitor"])
             subprocess.call("/usr/bin/xset dpms force off",
@@ -59,7 +58,7 @@ class Standbymonitor(MycroftSkill):
         self.speak_dialog('wakeupmonitor')
 
     @intent_file_handler('automonitor.intent')
-    def handle_wakeup_monitor(self, message):
+    def handle_auto_monitor(self, message):
         self.settings["auto"] = True
         self.add_event('recognizer_loop:audio_output_end',
                         self.handle_standby)
