@@ -15,7 +15,7 @@
             "name": "monitor",
             "type": "select",
             "label": "(autoplay) append note to request",
-            "options": "HDMI|1;7 Zoll pi Display|2;notebook|3",
+            "options": "xset dpms force|1;7 Zoll pi Display|2;DLP2000|3;tvservice|4;vcgencmd|5;CEC|6",
             "value": 1
           },          
           {

@@ -27,10 +27,19 @@ class Standbymonitor(MycroftSkill):
             subprocess.call("/usr/bin/xset dpms force off",
                                     preexec_fn=os.setsid, shell=True)
         elif int(self.settings["monitor"]) == 2:
-            subprocess.call("/usr/bin/xset dpms force off",
+            subprocess.call("sudo cp off /sys/class/backlight/rpi_backlight/bl_power",
                                     preexec_fn=os.setsid, shell=True)
         elif int(self.settings["monitor"]) == 3:
-            subprocess.call("/usr/bin/xset dpms force off",
+            subprocess.call("usr/sbin/i2cset  -y $BUS 0x1b 0x16 0x00 0x00 0x00 0x00 i",
+                                    preexec_fn=os.setsid, shell=True)
+        elif int(self.settings["monitor"]) == 4:
+            subprocess.call("tvservice --off",
+                                    preexec_fn=os.setsid, shell=True)
+        elif int(self.settings["monitor"]) == 5:
+            subprocess.call("vcgencmd display_power 1",
+                                    preexec_fn=os.setsid, shell=True)
+        elif int(self.settings["monitor"]) == 6:
+            subprocess.call("echo 'standby 0' | cec-client -s -d 1",
                                     preexec_fn=os.setsid, shell=True)
 
     def ex_wakeup(self):
@@ -38,11 +47,22 @@ class Standbymonitor(MycroftSkill):
             subprocess.call("/usr/bin/xset dpms force on",
                                     preexec_fn=os.setsid, shell=True)
         elif int(self.settings["monitor"]) == 2:
-            subprocess.call("/usr/bin/xset dpms force on",
+            subprocess.call("sudo cp on /sys/class/backlight/rpi_backlight/bl_power",
                                     preexec_fn=os.setsid, shell=True)
         elif int(self.settings["monitor"]) == 3:
-            subprocess.call("/usr/bin/xset dpms force on",
+            subprocess.call("/usr/sbin/i2cset -y $BUS 0x1b 0x16 0x00 0x00 0x00 0x07 i",
                                     preexec_fn=os.setsid, shell=True)
+        elif int(self.settings["monitor"]) == 4:
+            subprocess.call("tvservice --preferred",
+                                    preexec_fn=os.setsid, shell=True)
+        elif int(self.settings["monitor"]) == 5:
+            subprocess.call("vcgencmd display_power 1",
+                                    preexec_fn=os.setsid, shell=True)
+        elif int(self.settings["monitor"]) == 6:
+            subprocess.call("echo 'on 0' | cec-client -s -d 1",
+                                    preexec_fn=os.setsid, shell=True)
+
+        
 
 
     @intent_file_handler('standbymonitor.intent')
