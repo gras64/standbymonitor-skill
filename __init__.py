@@ -71,13 +71,13 @@ class Standbymonitor(MycroftSkill):
     def handle_standby_monitor(self, message):
         self.remove_event('recognizer_loop:wakeword')
         self.ex_standby()
-        self.speak_dialog('standbymonitor')
+        self.speak_dialog("standbymonitor")
 
     @intent_file_handler('wakeupmonitor.intent')
     def handle_wakeup_monitor(self, message):
         self.remove_event('recognizer_loop:audio_output_end')
         self.ex_wakeup()
-        self.speak_dialog('wakeupmonitor')
+        self.speak_dialog("wakeupmonitor")
 
     @intent_file_handler('automonitor.intent')
     def handle_auto_monitor(self, message):
@@ -86,7 +86,7 @@ class Standbymonitor(MycroftSkill):
                         self.handle_standby)
         self.add_event('recognizer_loop:wakeword',
                         self.ex_wakeup)
-        self.speak_dialog('automonitor')
+        self.speak_dialog("automonitor")
 
 
 def create_skill():
