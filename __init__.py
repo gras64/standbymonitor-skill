@@ -16,6 +16,7 @@ class Standbymonitor(MycroftSkill):
                         self.handle_standby)
             self.add_event('recognizer_loop:wakeword',
                         self.ex_wakeup)
+            self.ex_wakeup()
 
     def handle_standby(self):
         time = self.settings["timer"]
