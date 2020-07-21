@@ -6,7 +6,7 @@ the skill switches the monitor off after a short time to save electricity when m
 
 ## Examples
 * "Monitor activate"
-+ "Monitor deaktivate"
+* "Monitor deaktivate"
 * "Monitor automatic"
 
 ## Credits

@@ -36,11 +36,12 @@ class Standbymonitor(MycroftSkill):
             subprocess.call("tvservice --off",
                                     preexec_fn=os.setsid, shell=True)
         elif int(self.settings["monitor"]) == 5:
-            subprocess.call("vcgencmd display_power 1",
+            subprocess.call("vcgencmd display_power 0",
                                     preexec_fn=os.setsid, shell=True)
         elif int(self.settings["monitor"]) == 6:
             subprocess.call("echo 'standby 0' | cec-client -s -d 1",
                                     preexec_fn=os.setsid, shell=True)
+        
 
     def ex_wakeup(self):
         if int(self.settings["monitor"]) == 1:
