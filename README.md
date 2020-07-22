@@ -18,7 +18,7 @@ multiple monitor setup support
 more intents
 ## For sudo on Raspberry
 
-    sudo crontab -e'''
+    sudo crontab -e
 and add
     
     @reboot /usr/bin/sudo /bin/chmod 777 /sys/class/backlight/rpi_backlight/bl_power
