@@ -17,12 +17,12 @@ gras64
 multiple monitor setup support
 more intents
 ## For sudo on Raspberry
-''' sudo crontab -e'''
-add
-'''
-@reboot /usr/bin/sudo /bin/chmod 777 /sys/class/backlight/rpi_backlight/bl_power
-@reboot /usr/bin/sudo /bin/chmod 777 /sys/class/backlight/rpi_backlight/brightness
-'''
+
+    sudo crontab -e'''
+and add
+    
+    @reboot /usr/bin/sudo /bin/chmod 777 /sys/class/backlight/rpi_backlight/bl_power
+    @reboot /usr/bin/sudo /bin/chmod 777 /sys/class/backlight/rpi_backlight/brightness
 
 ## Category
 **Daily**
