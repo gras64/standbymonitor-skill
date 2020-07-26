@@ -50,6 +50,10 @@ class Standbymonitor(MycroftSkill):
         
 
     def ex_wakeup(self):
+        try:
+            self.cancel_scheduled_event("standby")
+        except:
+            pass
         self.log.info("handle wakeup")
         if int(self.settings["monitor"]) == 1:
             subprocess.call("/usr/bin/xset dpms force on",
@@ -71,9 +75,6 @@ class Standbymonitor(MycroftSkill):
         elif int(self.settings["monitor"]) == 6:
             subprocess.call("echo 'on 0' | cec-client -s -d 1",
                                     preexec_fn=os.setsid, shell=True)
-
-        
-
 
     @intent_file_handler('standbymonitor.intent')
     def handle_standby_monitor(self, message):
@@ -99,4 +100,3 @@ class Standbymonitor(MycroftSkill):
 
 def create_skill():
     return Standbymonitor()
-
