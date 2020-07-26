@@ -18,7 +18,7 @@ class Standbymonitor(MycroftSkill):
                         self.ex_standby)
             self.add_event('recognizer_loop:wakeword',
                         self.ex_wakeup)
-            self.ex_wakeup()
+            self.ex_standby()
         self.log.info("set auto mode to: "+str(self.settings["auto"]))
 
     def handle_standby(self):
@@ -48,7 +48,6 @@ class Standbymonitor(MycroftSkill):
             subprocess.call("echo 'standby 0' | cec-client -s -d 1",
                                     preexec_fn=os.setsid, shell=True)
         
-
     def ex_wakeup(self):
         try:
             self.cancel_scheduled_event("standby")
@@ -96,7 +95,6 @@ class Standbymonitor(MycroftSkill):
         self.add_event('recognizer_loop:wakeword',
                         self.ex_wakeup)
         self.speak_dialog("automonitor")
-
 
 def create_skill():
     return Standbymonitor()
