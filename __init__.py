@@ -14,7 +14,7 @@ class Standbymonitor(MycroftSkill):
         if self.settings["auto"]:
             self.add_event('enclosure.mouth.reset',
                         self.handle_standby)
-            self.add_event('recognizer_loop:speech.recognition.unknown',
+            self.add_event('mycroft.speech.recognition.unknown',
                         self.ex_standby)
             self.add_event('recognizer_loop:wakeword',
                         self.ex_wakeup)
