@@ -47,6 +47,9 @@ class Standbymonitor(MycroftSkill):
         elif int(self.settings["monitor"]) == 6:
             subprocess.call("echo 'standby 0' | cec-client -s -d 1",
                                     preexec_fn=os.setsid, shell=True)
+        elif int(self.settings["monitor"]) == 7:
+            self.bus.emit(Message('mycroft.eyes.off'))
+            self.bus.emit(Message('mycroft.mouth.reset'))
         
     def ex_wakeup(self):
         try:
@@ -74,6 +77,8 @@ class Standbymonitor(MycroftSkill):
         elif int(self.settings["monitor"]) == 6:
             subprocess.call("echo 'on 0' | cec-client -s -d 1",
                                     preexec_fn=os.setsid, shell=True)
+        elif int(self.settings["monitor"]) == 7:
+            self.bus.emit(Message('mycroft.eyes.default'))
 
     @intent_file_handler('standbymonitor.intent')
     def handle_standby_monitor(self, message):
