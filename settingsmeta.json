@@ -14,8 +14,8 @@
             "name": "monitor",
             "type": "select",
             "label": "(autoplay) append note to request",
-            "options": "xset dpms force|1;7 Zoll pi Display|2;DLP2000|3;tvservice|4;vcgencmd|5;CEC|6;Mark 1|7",
-            "value": 1
+            "options": "auto|0;xset dpms force|1;7 Zoll pi Display|2;DLP2000|3;tvservice|4;vcgencmd|5;CEC|6;Mark 1|7",
+            "value": 0
           },          
           {
               "name": "timer",

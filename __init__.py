@@ -1,5 +1,6 @@
 from mycroft import MycroftSkill, intent_file_handler
 from mycroft.messagebus.message import Message
+from mycroft.configuration import Configuration
 from os.path import os, abspath, dirname
 import subprocess
 
@@ -9,7 +10,7 @@ class Standbymonitor(MycroftSkill):
     
     def initialize(self):
         self.settings["auto"] = self.settings.get('auto', True)
-        self.settings["monitor"] = self.settings.get('monitor', 1)
+        self.monitor = self.settings.get('monitor', 0)
         self.settings["timer"] = self.settings.get('timer', 60)
         if self.settings["auto"]:
             self.add_event('enclosure.mouth.reset',
@@ -19,6 +20,20 @@ class Standbymonitor(MycroftSkill):
             self.add_event('recognizer_loop:wakeword',
                         self.ex_wakeup)
             self.ex_standby()
+        config = Configuration.get()
+        platform = config.get('enclosure').get('platform')
+        if int(self.monitor) == 0:
+            if platform == "mycroft_mark_1":
+                self.monitor = 7
+            elif platform == "mycroft_mark_2":
+                self.monitor = 1
+            elif os.path.isfile("/sys/class/backlight/rpi_backlight/bl_power"):
+                self.monitor = 2
+            elif os.path.isfile("/dev/i2c-0"):
+                self.monitor = 3
+            else:
+                self.monitor = 1
+            self.log.info("activate auto monitor and select: "+str(self.monitor))
         self.log.info("set auto mode to: "+str(self.settings["auto"]))
 
     def handle_standby(self):
@@ -28,26 +43,25 @@ class Standbymonitor(MycroftSkill):
 
     def ex_standby(self):
         self.log.info("handle standby")
-        if int(self.settings["monitor"]) == 1:
-            self.log.info(self.settings["monitor"])
+        if int(self.monitor) == 1:
             subprocess.call("/usr/bin/xset dpms force off",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 2:
+        elif int(self.monitor) == 2:
             subprocess.call("echo 1 > /sys/class/backlight/rpi_backlight/bl_power",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 3:
+        elif int(self.monitor) == 3:
             subprocess.call("usr/sbin/i2cset  -y $BUS 0x1b 0x16 0x00 0x00 0x00 0x00 i",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 4:
+        elif int(self.monitor) == 4:
             subprocess.call("tvservice --off",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 5:
+        elif int(self.monitor) == 5:
             subprocess.call("vcgencmd display_power 0",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 6:
+        elif int(self.monitor) == 6:
             subprocess.call("echo 'standby 0' | cec-client -s -d 1",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 7:
+        elif int(self.monitor) == 7:
             self.bus.emit(Message('mycroft.eyes.off'))
             self.bus.emit(Message('mycroft.mouth.reset'))
         
@@ -57,27 +71,27 @@ class Standbymonitor(MycroftSkill):
         except:
             pass
         self.log.info("handle wakeup")
-        if int(self.settings["monitor"]) == 1:
+        if int(self.monitor) == 1:
             subprocess.call("/usr/bin/xset dpms force on",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 2:
+        elif int(self.monitor) == 2:
             subprocess.call("echo 0 > /sys/class/backlight/rpi_backlight/bl_power",
                                     preexec_fn=os.setsid, shell=True)
             subprocess.call("echo '255' > /sys/class/backlight/rpi_backlight/brightness",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 3:
+        elif int(self.monitor) == 3:
             subprocess.call("/usr/sbin/i2cset -y $BUS 0x1b 0x16 0x00 0x00 0x00 0x07 i",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 4:
+        elif int(self.monitor) == 4:
             subprocess.call("tvservice --preferred",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 5:
+        elif int(self.monitor) == 5:
             subprocess.call("vcgencmd display_power 1",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 6:
+        elif int(self.monitor) == 6:
             subprocess.call("echo 'on 0' | cec-client -s -d 1",
                                     preexec_fn=os.setsid, shell=True)
-        elif int(self.settings["monitor"]) == 7:
+        elif int(self.monitor) == 7:
             self.bus.emit(Message('mycroft.eyes.default'))
 
     @intent_file_handler('standbymonitor.intent')
