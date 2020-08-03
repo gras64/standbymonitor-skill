@@ -3,7 +3,7 @@ Monitor Standby
 
 ## About
 the skill switches the monitor off after a short time to save electricity when mycroft is not used. With "hey mycroft" the monitor is switched on again.you can set the time and the automatic mode under "home.mycroft".
-the skill supports the following methods:xset dpms force,7 Zoll pi Display,DLP2000,tvservice,vcgencmd,CEC
+the skill supports the following methods:auto,xset dpms force,7 Zoll pi Display,DLP2000,tvservice,vcgencmd,CEC
 
 ## Examples
 * "Monitor activate"
